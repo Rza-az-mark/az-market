@@ -10,7 +10,7 @@
 <body class="bg-gray-100 font-sans text-gray-800">
 
     <!-- Header / Yuxarı Naviqasiya -->
-    <header class="bg-white shadow-sm sticky top-0 z-50">
+    <header class="bg-white shadow-sm sticky top-0 z-40">
         <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
             <h1 class="text-2xl font-black text-indigo-600 tracking-wide">AZ<span class="text-orange-500">Market</span></h1>
             
@@ -20,25 +20,33 @@
                 <i class="fa-solid fa-magnifying-glass absolute right-3 top-2.5 text-gray-400"></i>
             </div>
 
-            <!-- Satıcı Ol Düyməsi -->
-            <a href="satici.html" class="bg-orange-500 hover:bg-orange-600 text-white font-medium text-xs sm:text-sm px-3 py-2 rounded-lg transition-colors flex items-center gap-1">
-                <i class="fa-solid fa-store"></i>
-                <span class="hidden sm:inline">Satıcı Ol</span>
-            </a>
+            <!-- Sağ Hissə: Səbət & Satıcı Ol -->
+            <div class="flex items-center gap-3">
+                <!-- Səbət Düyməsi -->
+                <button onclick="toggleCart()" class="relative bg-gray-100 hover:bg-gray-200 text-gray-700 p-2.5 rounded-full transition-colors">
+                    <i class="fa-solid fa-cart-shopping text-lg"></i>
+                    <span id="cart-count" class="absolute -top-1 -right-1 bg-orange-500 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center">0</span>
+                </button>
+
+                <!-- Satıcı Ol Düyməsi -->
+                <a href="satici.html" class="bg-orange-500 hover:bg-orange-600 text-white font-medium text-xs sm:text-sm px-3 py-2 rounded-lg transition-colors flex items-center gap-1">
+                    <i class="fa-solid fa-store"></i>
+                    <span class="hidden sm:inline">Satıcı Ol</span>
+                </a>
+            </div>
         </div>
 
         <!-- Kateqoriyalar Menyusu -->
-        <div class="border-t overflow-x-auto whitespace-nowrap px-4 py-2 text-sm text-gray-600 flex gap-6 scrollbar-hide max-w-6xl mx-auto">
+        <div class="border-t overflow-x-auto whitespace-nowrap px-4 py-2 text-sm text-gray-600 flex gap-6 max-w-6xl mx-auto">
             <span class="font-bold text-indigo-600 cursor-pointer border-b-2 border-indigo-600 pb-1">Hamısı</span>
             <span class="cursor-pointer hover:text-indigo-600">Geyim & Moda</span>
             <span class="cursor-pointer hover:text-indigo-600">Elektronika</span>
             <span class="cursor-pointer hover:text-indigo-600">Ev & Yaşam</span>
             <span class="cursor-pointer hover:text-indigo-600">Kosmetika & Baxım</span>
-            <span class="cursor-pointer hover:text-indigo-600">İdman & Asudə</span>
         </div>
     </header>
 
-    <!-- Banner / Elan Bölməsi -->
+    <!-- Banner Bölməsi -->
     <div class="max-w-6xl mx-auto px-4 my-4">
         <div class="bg-gradient-to-r from-indigo-600 to-orange-500 text-white rounded-2xl p-6 shadow-md flex flex-col sm:flex-row items-center justify-between gap-4">
             <div>
@@ -50,7 +58,7 @@
         </div>
     </div>
 
-    <!-- Məhsul Vitrini Grid -->
+    <!-- Məhsul Vitrini -->
     <main class="max-w-6xl mx-auto px-4 pb-12">
         <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
             <i class="fa-solid fa-fire text-orange-500"></i> Ən Çox Satan Məhsullar
@@ -58,7 +66,7 @@
 
         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
             
-            <!-- Məhsul Kartı 1 -->
+            <!-- Məhsul 1 -->
             <div class="bg-white rounded-xl shadow-sm border overflow-hidden flex flex-col justify-between hover:shadow-md transition-shadow">
                 <div class="relative">
                     <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400" alt="Məhsul" class="w-full h-40 object-cover">
@@ -71,7 +79,6 @@
                         <div class="flex items-center gap-1 mt-1 text-xs text-amber-500">
                             <i class="fa-solid fa-star"></i>
                             <span class="font-bold text-gray-700">4.8</span>
-                            <span class="text-gray-400 text-[10px]">(128)</span>
                         </div>
                     </div>
                     <div class="mt-3 flex items-center justify-between">
@@ -79,14 +86,14 @@
                             <span class="text-xs text-gray-400 line-through">45 ₼</span>
                             <p class="text-sm sm:text-base font-bold text-gray-900">36 ₼</p>
                         </div>
-                        <button class="bg-indigo-50 text-indigo-600 p-2 rounded-lg hover:bg-indigo-600 hover:text-white transition-colors">
+                        <button onclick="addToCart(1, 'Simsiz Qulaqlıq Bluetooth 5.0', 36, 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400')" class="bg-indigo-50 text-indigo-600 p-2 rounded-lg hover:bg-indigo-600 hover:text-white transition-colors">
                             <i class="fa-solid fa-cart-plus"></i>
                         </button>
                     </div>
                 </div>
             </div>
 
-            <!-- Məhsul Kartı 2 -->
+            <!-- Məhsul 2 -->
             <div class="bg-white rounded-xl shadow-sm border overflow-hidden flex flex-col justify-between hover:shadow-md transition-shadow">
                 <div class="relative">
                     <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400" alt="Məhsul" class="w-full h-40 object-cover">
@@ -98,21 +105,20 @@
                         <div class="flex items-center gap-1 mt-1 text-xs text-amber-500">
                             <i class="fa-solid fa-star"></i>
                             <span class="font-bold text-gray-700">4.6</span>
-                            <span class="text-gray-400 text-[10px]">(45)</span>
                         </div>
                     </div>
                     <div class="mt-3 flex items-center justify-between">
                         <div>
                             <p class="text-sm sm:text-base font-bold text-gray-900">89 ₼</p>
                         </div>
-                        <button class="bg-indigo-50 text-indigo-600 p-2 rounded-lg hover:bg-indigo-600 hover:text-white transition-colors">
+                        <button onclick="addToCart(2, 'Klassik Qol Saatı (Dəri Kəmər)', 89, 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400')" class="bg-indigo-50 text-indigo-600 p-2 rounded-lg hover:bg-indigo-600 hover:text-white transition-colors">
                             <i class="fa-solid fa-cart-plus"></i>
                         </button>
                     </div>
                 </div>
             </div>
 
-            <!-- Məhsul Kartı 3 -->
+            <!-- Məhsul 3 -->
             <div class="bg-white rounded-xl shadow-sm border overflow-hidden flex flex-col justify-between hover:shadow-md transition-shadow">
                 <div class="relative">
                     <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400" alt="Məhsul" class="w-full h-40 object-cover">
@@ -125,7 +131,6 @@
                         <div class="flex items-center gap-1 mt-1 text-xs text-amber-500">
                             <i class="fa-solid fa-star"></i>
                             <span class="font-bold text-gray-700">4.9</span>
-                            <span class="text-gray-400 text-[10px]">(210)</span>
                         </div>
                     </div>
                     <div class="mt-3 flex items-center justify-between">
@@ -133,14 +138,14 @@
                             <span class="text-xs text-gray-400 line-through">120 ₼</span>
                             <p class="text-sm sm:text-base font-bold text-gray-900">102 ₼</p>
                         </div>
-                        <button class="bg-indigo-50 text-indigo-600 p-2 rounded-lg hover:bg-indigo-600 hover:text-white transition-colors">
+                        <button onclick="addToCart(3, 'Qırmızı İdman Ayaqqabısı', 102, 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400')" class="bg-indigo-50 text-indigo-600 p-2 rounded-lg hover:bg-indigo-600 hover:text-white transition-colors">
                             <i class="fa-solid fa-cart-plus"></i>
                         </button>
                     </div>
                 </div>
             </div>
 
-            <!-- Məhsul Kartı 4 -->
+            <!-- Məhsul 4 -->
             <div class="bg-white rounded-xl shadow-sm border overflow-hidden flex flex-col justify-between hover:shadow-md transition-shadow">
                 <div class="relative">
                     <img src="https://images.unsplash.com/photo-1583394838336-acd977736f90?w=400" alt="Məhsul" class="w-full h-40 object-cover">
@@ -152,14 +157,13 @@
                         <div class="flex items-center gap-1 mt-1 text-xs text-amber-500">
                             <i class="fa-solid fa-star"></i>
                             <span class="font-bold text-gray-700">4.7</span>
-                            <span class="text-gray-400 text-[10px]">(88)</span>
                         </div>
                     </div>
                     <div class="mt-3 flex items-center justify-between">
                         <div>
                             <p class="text-sm sm:text-base font-bold text-gray-900">145 ₼</p>
                         </div>
-                        <button class="bg-indigo-50 text-indigo-600 p-2 rounded-lg hover:bg-indigo-600 hover:text-white transition-colors">
+                        <button onclick="addToCart(4, 'Studio Səs Qulaqlığı', 145, 'https://images.unsplash.com/photo-1583394838336-acd977736f90?w=400')" class="bg-indigo-50 text-indigo-600 p-2 rounded-lg hover:bg-indigo-600 hover:text-white transition-colors">
                             <i class="fa-solid fa-cart-plus"></i>
                         </button>
                     </div>
@@ -169,5 +173,103 @@
         </div>
     </main>
 
+    <!-- SƏBƏT OVERLAY / MODAL PANEL -->
+    <div id="cart-modal" class="fixed inset-0 bg-black/50 z-50 hidden transition-opacity">
+        <div class="fixed top-0 right-0 h-full w-full max-w-md bg-white shadow-xl flex flex-col justify-between">
+            
+            <!-- Səbət Başlığı -->
+            <div class="p-4 border-b flex items-center justify-between bg-gray-50">
+                <h3 class="text-lg font-bold text-gray-800 flex items-center gap-2">
+                    <i class="fa-solid fa-cart-shopping text-indigo-600"></i> Səbətim
+                </h3>
+                <button onclick="toggleCart()" class="text-gray-400 hover:text-gray-600 text-xl font-bold p-1">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Məhsul Siyahısı -->
+            <div id="cart-items" class="p-4 flex-1 overflow-y-auto space-y-4">
+                <p class="text-center text-gray-500 my-8">Səbəsiniz boşdur.</p>
+            </div>
+
+            <!-- Səbətin Altı / Məbləğ & Ödəniş -->
+            <div class="p-4 border-t bg-gray-50 space-y-3">
+                <div class="flex justify-between items-center text-base font-bold text-gray-800">
+                    <span>Yekun Məbləğ:</span>
+                    <span id="cart-total" class="text-xl text-indigo-600">0 ₼</span>
+                </div>
+                <button class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-xl shadow transition-colors">
+                    Sifarişi Rəsmiləşdir
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- SƏBƏT JAVASCRIPT MƏNTİQİ -->
+    <script>
+        let cart = [];
+
+        function toggleCart() {
+            const modal = document.getElementById('cart-modal');
+            modal.classList.toggle('hidden');
+        }
+
+        function addToCart(id, title, price, img) {
+            const existing = cart.find(item => item.id === id);
+            if (existing) {
+                existing.quantity += 1;
+            } else {
+                cart.push({ id, title, price, img, quantity: 1 });
+            }
+            updateCartUI();
+        }
+
+        function changeQuantity(id, delta) {
+            const item = cart.find(item => item.id === id);
+            if (item) {
+                item.quantity += delta;
+                if (item.quantity <= 0) {
+                    cart = cart.filter(i => i.id !== id);
+                }
+            }
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const cartItemsContainer = document.getElementById('cart-items');
+            const cartCountBadge = document.getElementById('cart-count');
+            const cartTotalSpan = document.getElementById('cart-total');
+
+            // Toplam sayı hesabla
+            const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCountBadge.innerText = totalCount;
+
+            // Toplam məbləği hesabla
+            const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            cartTotalSpan.innerText = totalPrice + ' ₼';
+
+            // HTML siyahısını yenilə
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = '<p class="text-center text-gray-500 my-8">Səbəsiniz boşdur.</p>';
+                return;
+            }
+
+            cartItemsContainer.innerHTML = cart.map(item => `
+                <div class="flex items-center gap-3 p-2 bg-white rounded-lg border">
+                    <img src="${item.img}" class="w-14 h-14 object-cover rounded">
+                    <div class="flex-1 min-w-0">
+                        <h5 class="text-xs font-semibold text-gray-800 truncate">${item.title}</h5>
+                        <p class="text-sm font-bold text-indigo-600 mt-1">${item.price} ₼</p>
+                    </div>
+                    <div class="flex items-center gap-2 bg-gray-100 rounded px-2 py-1">
+                        <button onclick="changeQuantity(${item.id}, -1)" class="text-gray-500 font-bold px-1">-</button>
+                        <span class="text-xs font-bold">${item.quantity}</span>
+                        <button onclick="changeQuantity(${item.id}, 1)" class="text-gray-500 font-bold px-1">+</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+    </script>
 </body>
 </html>
