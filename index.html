@@ -3,266 +3,244 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AZ Market - Multi-Vendor Marketplace</title>
+    <title>AZogram - Sosial Şəbəkə</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="bg-gray-100 font-sans text-gray-800">
+<body class="bg-gray-50 font-sans text-gray-800">
 
-    <!-- Toast Bildiriş Qutusu -->
-    <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-gray-900 text-white px-4 py-3 rounded-xl shadow-lg flex items-center gap-3 text-sm">
-        <i class="fa-solid fa-circle-check text-green-400 text-lg"></i>
-        <span id="toast-msg">Əməliyyat uğurla yerinə yetirildi!</span>
-    </div>
-
-    <header class="bg-white shadow-sm sticky top-0 z-40">
-        <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
-            <h1 class="text-2xl font-black text-indigo-600 tracking-wide">AZ<span class="text-orange-500">Market</span></h1>
-            
-            <div class="flex-1 max-w-md relative">
-                <input type="text" id="search-input" oninput="filterProducts()" placeholder="Məhsul, marka və ya kateqoriya axtarın..." class="w-full bg-gray-100 text-sm py-2 px-4 pr-10 rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                <i class="fa-solid fa-magnifying-glass absolute right-3 top-2.5 text-gray-400"></i>
-            </div>
-
-            <div class="flex items-center gap-2">
-                <a href="favoritler.html" class="relative bg-gray-100 hover:bg-gray-200 text-gray-700 p-2.5 rounded-full transition-colors" title="Favoritlər">
-                    <i class="fa-solid fa-heart text-red-500 text-lg"></i>
-                </a>
-
-                <a href="sifarislerim.html" class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium text-xs sm:text-sm px-3 py-2 rounded-lg transition-colors hidden sm:inline-block">
-                    Sifarişlərim
-                </a>
-
-                <a href="login.html" class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium text-xs sm:text-sm px-3 py-2 rounded-lg transition-colors flex items-center gap-1">
-                    <i class="fa-solid fa-user"></i>
-                    <span class="hidden sm:inline">Giriş</span>
-                </a>
-
-                <button onclick="toggleCart()" class="relative bg-gray-100 hover:bg-gray-200 text-gray-700 p-2.5 rounded-full transition-colors">
-                    <i class="fa-solid fa-cart-shopping text-lg"></i>
-                    <span id="cart-count" class="absolute -top-1 -right-1 bg-orange-500 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center">0</span>
+    <!-- Üst Naviqasiya Paneli -->
+    <header class="bg-white border-b sticky top-0 z-40">
+        <div class="max-w-2xl mx-auto px-4 h-14 flex items-center justify-between">
+            <h1 class="text-2xl font-black italic tracking-wider text-indigo-600">AZogram</h1>
+            <div class="flex items-center gap-4 text-xl">
+                <button onclick="openCreateModal()" class="hover:text-indigo-600 transition-colors" title="Yeni Paylaşım">
+                    <i class="fa-regular fa-square-plus"></i>
                 </button>
-
-                <a href="satici.html" class="bg-orange-500 hover:bg-orange-600 text-white font-medium text-xs sm:text-sm px-3 py-2 rounded-lg transition-colors flex items-center gap-1">
-                    <i class="fa-solid fa-store"></i>
-                    <span class="hidden sm:inline">Satıcı Ol</span>
+                <a href="profil.html" class="hover:text-indigo-600 transition-colors" title="Profil">
+                    <i class="fa-regular fa-circle-user"></i>
                 </a>
-            </div>
-        </div>
-
-        <div class="border-t overflow-x-auto whitespace-nowrap px-4 py-2 text-sm text-gray-600 flex justify-between items-center max-w-6xl mx-auto">
-            <div class="flex gap-6" id="categories-bar">
-                <span onclick="filterCategory('Hamısı')" class="cat-btn font-bold text-indigo-600 cursor-pointer border-b-2 border-indigo-600 pb-1">Hamısı</span>
-                <span onclick="filterCategory('Geyim & Moda')" class="cat-btn cursor-pointer hover:text-indigo-600">Geyim & Moda</span>
-                <span onclick="filterCategory('Elektronika')" class="cat-btn cursor-pointer hover:text-indigo-600">Elektronika</span>
-                <span onclick="filterCategory('Ev & Yaşam')" class="cat-btn cursor-pointer hover:text-indigo-600">Ev & Yaşam</span>
-                <span onclick="filterCategory('Kosmetika')" class="cat-btn cursor-pointer hover:text-indigo-600">Kosmetika & Baxım</span>
-            </div>
-
-            <!-- Qiymət Sıralama Süzgəci -->
-            <div class="flex items-center gap-2 text-xs">
-                <span class="text-gray-400">Sırala:</span>
-                <select id="sort-select" onchange="filterProducts()" class="bg-gray-50 border rounded-lg px-2 py-1 font-semibold text-gray-700 focus:outline-none">
-                    <option value="default">Standart</option>
-                    <option value="low-high">Ucuzdan bahaya</option>
-                    <option value="high-low">Bahadan ucuzadək</option>
-                </select>
             </div>
         </div>
     </header>
 
-    <div class="max-w-6xl mx-auto px-4 my-4">
-        <div class="bg-gradient-to-r from-indigo-600 to-orange-500 text-white rounded-2xl p-6 shadow-md flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div>
-                <span class="bg-white/20 text-xs px-2.5 py-1 rounded-full uppercase tracking-wider font-semibold">Mövsüm Endirimləri</span>
-                <h2 class="text-2xl sm:text-3xl font-extrabold mt-2">Seçilmiş Məhsullarda 50%-dək Endirim!</h2>
-                <p class="text-sm opacity-90 mt-1">Azərbaycanın yerli satıcılarından ən keyfiyyətli məhsullar.</p>
+    <!-- Əsas Məzmun Lentası -->
+    <main class="max-w-xl mx-auto px-2 py-4 space-y-6">
+
+        <!-- Hekayələr (Stories) Bölməsi -->
+        <div class="bg-white border rounded-xl p-3 flex gap-4 overflow-x-auto no-scrollbar">
+            <div class="flex flex-col items-center cursor-pointer flex-shrink-0">
+                <div class="w-16 h-16 rounded-full ring-2 ring-indigo-500 p-0.5">
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" class="w-full h-full object-cover rounded-full">
+                </div>
+                <span class="text-[11px] mt-1 text-gray-600 font-medium">Sənin hekayən</span>
             </div>
-            <button class="bg-white text-indigo-600 font-bold px-6 py-2.5 rounded-xl shadow hover:bg-gray-50 transition-colors whitespace-nowrap">Kəşf Et</button>
+            <div class="flex flex-col items-center cursor-pointer flex-shrink-0">
+                <div class="w-16 h-16 rounded-full ring-2 ring-pink-500 p-0.5">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150" class="w-full h-full object-cover rounded-full">
+                </div>
+                <span class="text-[11px] mt-1 text-gray-600 font-medium">eliyev_1</span>
+            </div>
+            <div class="flex flex-col items-center cursor-pointer flex-shrink-0">
+                <div class="w-16 h-16 rounded-full ring-2 ring-pink-500 p-0.5">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150" class="w-full h-full object-cover rounded-full">
+                </div>
+                <span class="text-[11px] mt-1 text-gray-600 font-medium">Leyla</span>
+            </div>
         </div>
-    </div>
 
-    <main class="max-w-6xl mx-auto px-4 pb-12">
-        <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
-            <i class="fa-solid fa-fire text-orange-500"></i> Bütün Məhsullar
-        </h3>
-
-        <div id="products-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-            <!-- JS ilə yüklənəcək -->
+        <!-- Postlar Siyahısı -->
+        <div id="posts-container" class="space-y-6">
+            <!-- JS vasitəsilə doldurulacaq -->
         </div>
+
     </main>
 
-    <!-- Səbət Modalı -->
-    <div id="cart-modal" class="fixed inset-0 bg-black/50 z-50 hidden transition-opacity">
-        <div class="fixed top-0 right-0 h-full w-full max-w-md bg-white shadow-xl flex flex-col justify-between">
-            <div class="p-4 border-b flex items-center justify-between bg-gray-50">
-                <h3 class="text-lg font-bold text-gray-800 flex items-center gap-2">
-                    <i class="fa-solid fa-cart-shopping text-indigo-600"></i> Səbətim
-                </h3>
-                <button onclick="toggleCart()" class="text-gray-400 hover:text-gray-600 text-xl font-bold p-1">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
+    <!-- Yeni Post Paylaşma Modalı -->
+    <div id="create-modal" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-md rounded-2xl p-6 space-y-4">
+            <div class="flex justify-between items-center border-b pb-3">
+                <h3 class="font-bold text-gray-800">Yeni Paylaşım yarat</h3>
+                <button onclick="closeCreateModal()" class="text-gray-400 hover:text-gray-600 text-lg"><i class="fa-solid fa-xmark"></i></button>
             </div>
-
-            <div id="cart-items" class="p-4 flex-1 overflow-y-auto space-y-4">
-                <p class="text-center text-gray-500 my-8">Səbəsiniz boşdur.</p>
-            </div>
-
-            <div class="p-4 border-t bg-gray-50 space-y-3">
-                <div class="flex justify-between items-center text-base font-bold text-gray-800">
-                    <span>Yekun Məbləğ:</span>
-                    <span id="cart-total" class="text-xl text-indigo-600">0 ₼</span>
+            <div class="space-y-3">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Şəkil Linki (URL)</label>
+                    <input type="text" id="post-img" placeholder="https://images.unsplash.com/..." class="w-full bg-gray-50 border rounded-lg p-2.5 text-sm focus:outline-none">
                 </div>
-                <a href="odenis.html" class="block w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-xl shadow transition-colors text-center">
-                    Sifarişi Rəsmiləşdir
-                </a>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Açıqlama</label>
+                    <textarea id="post-caption" placeholder="Şəkil haqqında nə düşünürsən?" class="w-full bg-gray-50 border rounded-lg p-2.5 text-sm focus:outline-none h-24"></textarea>
+                </div>
+                <button onclick="addNewPost()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-xl transition-colors">
+                    Paylaş
+                </button>
             </div>
         </div>
     </div>
 
     <script>
-        const defaultProducts = [
-            { id: 1, title: 'Simsiz Qulaqlıq Bluetooth 5.0', price: 36, category: 'Elektronika', store: 'TechStore', rating: 4.8, img: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400' },
-            { id: 2, title: 'Klassik Qol Saatı (Dəri Kəmər)', price: 89, category: 'Geyim & Moda', store: 'TimeKeeper', rating: 4.6, img: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400' },
-            { id: 3, title: 'Qırmızı İdman Ayaqqabısı', price: 102, category: 'Geyim & Moda', store: 'SportZone', rating: 4.9, img: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400' },
-            { id: 4, title: 'Studio Səs Qulaqlığı', price: 145, category: 'Elektronika', store: 'AudioPro', rating: 4.7, img: 'https://images.unsplash.com/photo-1583394838336-acd977736f90?w=400' }
+        const defaultPosts = [
+            {
+                id: 1,
+                username: 'rza_dev',
+                userAvatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150',
+                image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600',
+                caption: 'Yeni veb layihə üzərində işləyirik! 💻🔥',
+                likes: 42,
+                isLiked: false,
+                comments: [
+                    { user: 'eliyev_1', text: 'Uğurlar dostum, əla görünür!' },
+                    { user: 'leyla_b', text: 'Çox səliqəlidir 😍' }
+                ]
+            },
+            {
+                id: 2,
+                username: 'baku_vibe',
+                userAvatar: 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=150',
+                image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600',
+                caption: 'Həftəsonu dincəlmək üçün ən gözəl yer 🌊',
+                likes: 128,
+                isLiked: true,
+                comments: [
+                    { user: 'nicat_99', text: 'Haradır bura?' }
+                ]
+            }
         ];
 
-        let selectedCategory = 'Hamısı';
-
-        function showToast(message) {
-            const toast = document.getElementById('toast');
-            document.getElementById('toast-msg').innerText = message;
-            toast.classList.remove('translate-y-20', 'opacity-0');
-            setTimeout(() => {
-                toast.classList.add('translate-y-20', 'opacity-0');
-            }, 2500);
+        function getPosts() {
+            const stored = localStorage.getItem('azogram_posts');
+            return stored ? JSON.parse(stored) : defaultPosts;
         }
 
-        function getProducts() {
-            const stored = localStorage.getItem('az_market_products');
-            return stored ? JSON.parse(stored) : defaultProducts;
+        function savePosts(posts) {
+            localStorage.setItem('azogram_posts', JSON.stringify(posts));
+            renderPosts();
         }
 
-        function renderProducts(items) {
-            const grid = document.getElementById('products-grid');
-            if(items.length === 0) {
-                grid.innerHTML = '<p class="col-span-full text-center text-gray-500 py-10">Heç bir məhsul tapılmadı.</p>';
-                return;
-            }
-            grid.innerHTML = items.map(item => `
-                <div class="bg-white rounded-xl shadow-sm border overflow-hidden flex flex-col justify-between hover:shadow-md transition-shadow">
-                    <a href="mehsul.html?id=${item.id}" class="block relative">
-                        <img src="${item.img}" alt="${item.title}" class="w-full h-40 object-cover">
-                    </a>
-                    <div class="p-3 flex-1 flex flex-col justify-between">
-                        <div>
-                            <span class="text-[11px] font-semibold text-indigo-600 uppercase tracking-wide">${item.store || 'AZ Market'}</span>
-                            <a href="mehsul.html?id=${item.id}" class="block text-xs sm:text-sm font-medium text-gray-800 line-clamp-2 mt-0.5 hover:text-indigo-600">${item.title}</a>
-                            <div class="flex items-center gap-1 mt-1 text-xs text-amber-500">
-                                <i class="fa-solid fa-star"></i>
-                                <span class="font-bold text-gray-700">${item.rating || '5.0'}</span>
+        function renderPosts() {
+            const posts = getPosts();
+            const container = document.getElementById('posts-container');
+
+            container.innerHTML = posts.map(post => `
+                <div class="bg-white border rounded-xl overflow-hidden shadow-sm">
+                    <!-- Post Başlığı -->
+                    <div class="flex items-center justify-between p-3">
+                        <div class="flex items-center gap-2">
+                            <img src="${post.userAvatar}" class="w-8 h-8 rounded-full object-cover">
+                            <span class="text-xs font-bold text-gray-800">${post.username}</span>
+                        </div>
+                        <i class="fa-solid fa-ellipsis text-gray-500 cursor-pointer"></i>
+                    </div>
+
+                    <!-- Post Şəkli -->
+                    <img src="${post.image}" class="w-full h-80 object-cover">
+
+                    <!-- Düymələr və bəyənmə -->
+                    <div class="p-3 space-y-2">
+                        <div class="flex items-center justify-between text-xl">
+                            <div class="flex items-center gap-4">
+                                <button onclick="toggleLike(${post.id})" class="transition-transform active:scale-125">
+                                    <i class="fa-${post.isLiked ? 'solid text-red-500' : 'regular'} fa-heart"></i>
+                                </button>
+                                <button class="hover:text-gray-600"><i class="fa-regular fa-comment"></i></button>
+                                <button class="hover:text-gray-600"><i class="fa-regular fa-paper-plane"></i></button>
                             </div>
+                            <button class="hover:text-gray-600"><i class="fa-regular fa-bookmark"></i></button>
                         </div>
-                        <div class="mt-3 flex items-center justify-between">
-                            <p class="text-sm sm:text-base font-bold text-gray-900">${item.price} ₼</p>
-                            <button onclick="addToCart(${item.id})" class="bg-indigo-50 text-indigo-600 p-2 rounded-lg hover:bg-indigo-600 hover:text-white transition-colors">
-                                <i class="fa-solid fa-cart-plus"></i>
-                            </button>
+
+                        <p class="text-xs font-bold text-gray-900">${post.likes} bəyənmə</p>
+
+                        <p class="text-xs text-gray-800">
+                            <span class="font-bold mr-1">${post.username}</span> ${post.caption}
+                        </p>
+
+                        <!-- Şərhlər siyahısı -->
+                        <div class="space-y-1 pt-1">
+                            ${post.comments.map(c => `
+                                <p class="text-xs text-gray-700">
+                                    <span class="font-bold mr-1">${c.user}</span> ${c.text}
+                                </p>
+                            `).join('')}
+                        </div>
+
+                        <!-- Şərh yazma qutusu -->
+                        <div class="flex items-center gap-2 pt-2 border-t mt-2">
+                            <input type="text" id="comment-input-${post.id}" placeholder="Şərh yaz..." class="w-full text-xs bg-transparent focus:outline-none">
+                            <button onclick="addComment(${post.id})" class="text-xs font-bold text-indigo-600 hover:text-indigo-800">Paylaş</button>
                         </div>
                     </div>
                 </div>
             `).join('');
         }
 
-        function filterProducts() {
-            const query = document.getElementById('search-input').value.toLowerCase();
-            const sortVal = document.getElementById('sort-select').value;
-            let products = getProducts();
-
-            let filtered = products.filter(p => {
-                const matchesSearch = p.title.toLowerCase().includes(query) || p.category.toLowerCase().includes(query);
-                const matchesCat = selectedCategory === 'Hamısı' || p.category === selectedCategory;
-                return matchesSearch && matchesCat;
-            });
-
-            if (sortVal === 'low-high') {
-                filtered.sort((a, b) => a.price - b.price);
-            } else if (sortVal === 'high-low') {
-                filtered.sort((a, b) => b.price - a.price);
-            }
-
-            renderProducts(filtered);
-        }
-
-        function filterCategory(cat) {
-            selectedCategory = cat;
-            document.querySelectorAll('.cat-btn').forEach(btn => {
-                if(btn.innerText.includes(cat)) {
-                    btn.className = 'cat-btn font-bold text-indigo-600 cursor-pointer border-b-2 border-indigo-600 pb-1';
+        function toggleLike(id) {
+            let posts = getPosts();
+            const post = posts.find(p => p.id === id);
+            if(post) {
+                if(post.isLiked) {
+                    post.likes -= 1;
+                    post.isLiked = false;
                 } else {
-                    btn.className = 'cat-btn cursor-pointer hover:text-indigo-600';
+                    post.likes += 1;
+                    post.isLiked = true;
                 }
-            });
-            filterProducts();
+                savePosts(posts);
+            }
         }
 
-        function getCart() {
-            return JSON.parse(localStorage.getItem('az_market_cart')) || [];
-        }
-        function saveCart(cart) {
-            localStorage.setItem('az_market_cart', JSON.stringify(cart));
-            updateCartUI();
-        }
-        function toggleCart() {
-            document.getElementById('cart-modal').classList.toggle('hidden');
-        }
-        function addToCart(id) {
-            const products = getProducts();
-            const prod = products.find(p => p.id === id);
-            let cart = getCart();
-            const existing = cart.find(item => item.id === id);
-            if(existing) { existing.quantity += 1; }
-            else { cart.push({ ...prod, quantity: 1 }); }
-            saveCart(cart);
-            showToast('Məhsul səbətə əlavə edildi!');
-        }
-        function changeQuantity(id, delta) {
-            let cart = getCart();
-            const item = cart.find(i => i.id === id);
-            if(item) {
-                item.quantity += delta;
-                if(item.quantity <= 0) cart = cart.filter(i => i.id !== id);
+        function addComment(postId) {
+            const input = document.getElementById(`comment-input-${postId}`);
+            const text = input.value.trim();
+            if(!text) return;
+
+            let posts = getPosts();
+            const post = posts.find(p => p.id === postId);
+            if(post) {
+                post.comments.push({ user: 'istifadeci', text: text });
+                savePosts(posts);
+                input.value = '';
             }
-            saveCart(cart);
         }
-        function updateCartUI() {
-            const cart = getCart();
-            document.getElementById('cart-count').innerText = cart.reduce((s, i) => s + i.quantity, 0);
-            document.getElementById('cart-total').innerText = cart.reduce((s, i) => s + (i.price * i.quantity), 0) + ' ₼';
-            const itemsContainer = document.getElementById('cart-items');
-            if(cart.length === 0) {
-                itemsContainer.innerHTML = '<p class="text-center text-gray-500 my-8">Səbəsiniz boşdur.</p>';
+
+        function openCreateModal() {
+            document.getElementById('create-modal').classList.remove('hidden');
+        }
+
+        function closeCreateModal() {
+            document.getElementById('create-modal').classList.add('hidden');
+        }
+
+        function addNewPost() {
+            const img = document.getElementById('post-img').value.trim();
+            const caption = document.getElementById('post-caption').value.trim();
+
+            if(!img || !caption) {
+                alert('Zəhmət olmasa şəkil linkini və açıqlamanı daxil edin.');
                 return;
             }
-            itemsContainer.innerHTML = cart.map(item => `
-                <div class="flex items-center gap-3 p-2 bg-white rounded-lg border">
-                    <img src="${item.img}" class="w-14 h-14 object-cover rounded">
-                    <div class="flex-1 min-w-0">
-                        <h5 class="text-xs font-semibold text-gray-800 truncate">${item.title}</h5>
-                        <p class="text-sm font-bold text-indigo-600 mt-1">${item.price} ₼</p>
-                    </div>
-                    <div class="flex items-center gap-2 bg-gray-100 rounded px-2 py-1">
-                        <button onclick="changeQuantity(${item.id}, -1)" class="text-gray-500 font-bold px-1">-</button>
-                        <span class="text-xs font-bold">${item.quantity}</span>
-                        <button onclick="changeQuantity(${item.id}, 1)" class="text-gray-500 font-bold px-1">+</button>
-                    </div>
-                </div>
-            `).join('');
+
+            let posts = getPosts();
+            const newPost = {
+                id: Date.now(),
+                username: 'senin_profilin',
+                userAvatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150',
+                image: img,
+                caption: caption,
+                likes: 0,
+                isLiked: false,
+                comments: []
+            };
+
+            posts.unshift(newPost);
+            savePosts(posts);
+            closeCreateModal();
+
+            document.getElementById('post-img').value = '';
+            document.getElementById('post-caption').value = '';
         }
 
-        renderProducts(getProducts());
-        updateCartUI();
+        renderPosts();
     </script>
 </body>
 </html>
