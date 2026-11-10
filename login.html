@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AZ Market - Giriş / Qeydiyyat</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-100 font-sans text-gray-800 flex items-center justify-center min-h-screen">
+
+    <div class="max-w-md w-full bg-white rounded-2xl shadow-sm border p-8 m-4">
+        
+        <div class="text-center mb-6">
+            <h1 class="text-3xl font-black text-indigo-600 tracking-wide">AZ<span class="text-orange-500">Market</span></h1>
+            <p class="text-xs text-gray-500 mt-1">Hesabınıza daxil olun və ya qeydiyyatdan keçin</p>
+        </div>
+
+        <div class="flex border-b mb-6 text-sm font-semibold">
+            <button onclick="switchTab('login')" id="tab-login" class="flex-1 pb-2 border-b-2 border-indigo-600 text-indigo-600 text-center">Giriş</button>
+            <button onclick="switchTab('register')" id="tab-register" class="flex-1 pb-2 border-b-2 border-transparent text-gray-400 text-center">Qeydiyyat</button>
+        </div>
+
+        <form id="form-login" onsubmit="handleLogin(event)" class="space-y-4">
+            <div>
+                <label class="block text-xs font-semibold text-gray-700 mb-1">E-poçt ünvanı</label>
+                <input type="email" required placeholder="ornek@mail.com" class="w-full bg-gray-50 border rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+            </div>
+            <div>
+                <label class="block text-xs font-semibold text-gray-700 mb-1">Şifrə</label>
+                <input type="password" required placeholder="********" class="w-full bg-gray-50 border rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+            </div>
+            <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-xl shadow transition-colors">
+                Daxil Ol
+            </button>
+        </form>
+
+        <form id="form-register" onsubmit="handleRegister(event)" class="space-y-4 hidden">
+            <div>
+                <label class="block text-xs font-semibold text-gray-700 mb-1">Ad və Soyad</label>
+                <input type="text" required placeholder="Əli Əliyev" class="w-full bg-gray-50 border rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+            </div>
+            <div>
+                <label class="block text-xs font-semibold text-gray-700 mb-1">E-poçt ünvanı</label>
+                <input type="email" required placeholder="ornek@mail.com" class="w-full bg-gray-50 border rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+            </div>
+            <div>
+                <label class="block text-xs font-semibold text-gray-700 mb-1">Şifrə yaradın</label>
+                <input type="password" required placeholder="********" class="w-full bg-gray-50 border rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+            </div>
+            <button type="submit" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-xl shadow transition-colors">
+                Qeydiyyatdan Keç
+            </button>
+        </form>
+
+        <div class="mt-6 text-center">
+            <a href="index.html" class="text-xs text-gray-500 hover:text-indigo-600 font-medium">
+                <i class="fa-solid fa-arrow-left"></i> Ana səhifəyə qayıt
+            </a>
+        </div>
+
+    </div>
+
+    <script>
+        function switchTab(tab) {
+            const loginForm = document.getElementById('form-login');
+            const regForm = document.getElementById('form-register');
+            const tabLogin = document.getElementById('tab-login');
+            const tabRegister = document.getElementById('tab-register');
+
+            if (tab === 'login') {
+                loginForm.classList.remove('hidden');
+                regForm.classList.add('hidden');
+                tabLogin.className = "flex-1 pb-2 border-b-2 border-indigo-600 text-indigo-600 text-center font-semibold";
+                tabRegister.className = "flex-1 pb-2 border-b-2 border-transparent text-gray-400 text-center font-semibold";
+            } else {
+                loginForm.classList.add('hidden');
+                regForm.classList.remove('hidden');
+                tabRegister.className = "flex-1 pb-2 border-b-2 border-orange-500 text-orange-500 text-center font-semibold";
+                tabLogin.className = "flex-1 pb-2 border-b-2 border-transparent text-gray-400 text-center font-semibold";
+            }
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            alert('Uğurla daxil oldunuz!');
+            window.location.href = 'index.html';
+        }
+
+        function handleRegister(e) {
+            e.preventDefault();
+            alert('Qeydiyyatınız uğurla tamamlandı!');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>
