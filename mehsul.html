@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AZ Market - Məhsul Haqqında</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-100 font-sans text-gray-800">
+
+    <header class="bg-white shadow-sm sticky top-0 z-40">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+            <h1 class="text-2xl font-black text-indigo-600">AZ<span class="text-orange-500">Market</span></h1>
+            <a href="index.html" class="text-sm font-semibold text-gray-600 hover:text-indigo-600 flex items-center gap-1">
+                <i class="fa-solid fa-arrow-left"></i> Ana səhifəyə qayıt
+            </a>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-4 py-8" id="product-detail-container">
+        <!-- JS ilə dinamik yüklənəcək -->
+    </main>
+
+    <script>
+        const defaultProducts = [
+            { id: 1, title: 'Simsiz Qulaqlıq Bluetooth 5.0', price: 36, category: 'Elektronika', store: 'TechStore', rating: 4.8, img: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800', desc: 'Yüksək səs keyfiyyəti, 20 saat batareya ömrü və rahat dizayn ilə gündəlik istifadə üçün mükəmməl seçimdir.' },
+            { id: 2, title: 'Klassik Qol Saatı (Dəri Kəmər)', price: 89, category: 'Geyim & Moda', store: 'TimeKeeper', rating: 4.6, img: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800', desc: 'Suya davamlı, həqiqi dəri kəmərli zərif bəy saatı. Rəsmi və gündəlik geyimlərlə tam uyğunlaşır.' },
+            { id: 3, title: 'Qırmızı İdman Ayaqqabısı', price: 102, category: 'Geyim & Moda', store: 'SportZone', rating: 4.9, img: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800', desc: 'Ortopedik altlıq, nəfəs alan parça. İdman və uzun gəzintilər üçün nəzərdə tutulub.' },
+            { id: 4, title: 'Studio Səs Qulaqlığı', price: 145, category: 'Elektronika', store: 'AudioPro', rating: 4.7, img: 'https://images.unsplash.com/photo-1583394838336-acd977736f90?w=800', desc: 'Peşəkar studiya səsi, səsboğucu mexanizm və yumşaq qulaq yastıqları.' }
+        ];
+
+        function getProducts() {
+            const stored = localStorage.getItem('az_market_products');
+            return stored ? JSON.parse(stored) : defaultProducts;
+        }
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const prodId = parseInt(urlParams.get('id'));
+
+        const products = getProducts();
+        const product = products.find(p => p.id === prodId) || products[0];
+
+        document.getElementById('product-detail-container').innerHTML = `
+            <div class="bg-white rounded-2xl shadow-sm p-6 grid md:grid-cols-2 gap-8 items-start">
+                <img src="${product.img}" class="w-full h-80 object-cover rounded-xl border">
+                <div class="space-y-4">
+                    <span class="text-xs font-bold text-indigo-600 uppercase tracking-wide bg-indigo-50 px-3 py-1 rounded-full">${product.store || 'AZ Market Satıcısı'}</span>
+                    <h2 class="text-2xl font-bold text-gray-900">${product.title}</h2>
+                    <div class="flex items-center gap-2 text-amber-500 text-sm">
+                        <i class="fa-solid fa-star"></i>
+                        <span class="font-bold text-gray-700">${product.rating || '5.0'}</span>
+                        <span class="text-gray-400">| Kateqoriya: ${product.category}</span>
+                    </div>
+                    <p class="text-gray-600 text-sm leading-relaxed">${product.desc || 'Bu məhsul yüksək keyfiyyət standartlarına cavab verir və zəmanətlə təqdim olunur.'}</p>
+                    <div class="text-3xl font-extrabold text-gray-900 pt-2">${product.price} ₼</div>
+                    <button onclick="addToCartAndGo()" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3.5 rounded-xl shadow transition-colors flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-cart-plus"></i> Səbətə Əlavə Et
+                    </button>
+                </div>
+            </div>
+        `;
+
+        function addToCartAndGo() {
+            let cart = JSON.parse(localStorage.getItem('az_market_cart')) || [];
+            const existing = cart.find(item => item.id === product.id);
+            if(existing) { existing.quantity += 1; }
+            else { cart.push({ id: product.id, title: product.title, price: product.price, img: product.img, quantity: 1 }); }
+            localStorage.setItem('az_market_cart', JSON.stringify(cart));
+            alert('Məhsul səbətə əlavə edildi!');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>
