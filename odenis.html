@@ -25,78 +25,41 @@
 
         <div class="grid md:grid-cols-3 gap-6">
             
-            <!-- Məlumat Forması -->
             <div class="md:col-span-2 space-y-6">
-                <!-- Çatdırılma Ünvanı -->
                 <div class="bg-white p-6 rounded-2xl shadow-sm border space-y-4">
                     <h3 class="text-lg font-bold text-gray-800 border-b pb-2">1. Çatdırılma Ünvanı</h3>
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <label class="block text-xs font-semibold text-gray-700 mb-1">Ad və Soyad</label>
-                            <input type="text" required placeholder="Əli Əliyev" class="w-full bg-gray-50 border rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                            <input type="text" id="cust-name" required placeholder="Əli Əliyev" class="w-full bg-gray-50 border rounded-lg p-2.5 text-sm focus:outline-none">
                         </div>
                         <div>
                             <label class="block text-xs font-semibold text-gray-700 mb-1">Telefon Nömrəsi</label>
-                            <input type="tel" required placeholder="+994 50 000 00 00" class="w-full bg-gray-50 border rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                            <input type="tel" id="cust-phone" required placeholder="+994 50 000 00 00" class="w-full bg-gray-50 border rounded-lg p-2.5 text-sm focus:outline-none">
                         </div>
                     </div>
                     <div>
-                        <label class="block text-xs font-semibold text-gray-700 mb-1">Şəhər / Rayon</label>
-                        <select class="w-full bg-gray-50 border rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                            <option>Bakı</option>
-                            <option>Sumqayıt</option>
-                            <option>Gəncə</option>
-                            <option>Xırdalan</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-gray-700 mb-1">Dəqiq Ünvan (Küçə, ev/mənzil)</label>
-                        <input type="text" required placeholder="Nizami küç. ev 12, mənzil 45" class="w-full bg-gray-50 border rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">Dəqiq Ünvan</label>
+                        <input type="text" id="cust-address" required placeholder="Nizami küç. ev 12" class="w-full bg-gray-50 border rounded-lg p-2.5 text-sm focus:outline-none">
                     </div>
                 </div>
 
-                <!-- Ödəniş Üsulu -->
                 <div class="bg-white p-6 rounded-2xl shadow-sm border space-y-4">
                     <h3 class="text-lg font-bold text-gray-800 border-b pb-2">2. Ödəniş Məlumatları</h3>
                     <div>
-                        <label class="block text-xs font-semibold text-gray-700 mb-1">Kartın Üzərindəki Ad</label>
-                        <input type="text" required placeholder="ALI ALIYEV" class="w-full bg-gray-50 border rounded-lg p-2.5 text-sm uppercase focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                    </div>
-                    <div>
                         <label class="block text-xs font-semibold text-gray-700 mb-1">Kart Nömrəsi</label>
-                        <input type="text" required maxlength="19" placeholder="0000 0000 0000 0000" class="w-full bg-gray-50 border rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                    </div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-semibold text-gray-700 mb-1">Bitmə Tarixi</label>
-                            <input type="text" placeholder="MM/YY" maxlength="5" class="w-full bg-gray-50 border rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-gray-700 mb-1">CVC / CVV</label>
-                            <input type="password" maxlength="3" placeholder="***" class="w-full bg-gray-50 border rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                        </div>
+                        <input type="text" required maxlength="19" placeholder="0000 0000 0000 0000" class="w-full bg-gray-50 border rounded-lg p-2.5 text-sm focus:outline-none">
                     </div>
                 </div>
             </div>
 
-            <!-- Sifariş Xülasəsi -->
             <div class="bg-white p-6 rounded-2xl shadow-sm border h-fit space-y-4">
                 <h3 class="text-lg font-bold text-gray-800 border-b pb-2">Sifarişin Xülasəsi</h3>
-                <div id="checkout-items" class="space-y-3 max-h-60 overflow-y-auto">
-                    <!-- JS ilə dolacaq -->
-                </div>
+                <div id="checkout-items" class="space-y-3 max-h-60 overflow-y-auto"></div>
                 <div class="border-t pt-3 space-y-2 text-sm text-gray-600">
                     <div class="flex justify-between">
-                        <span>Məhsullar:</span>
-                        <span id="subtotal">0 ₼</span>
-                    </div>
-                    <div class="flex justify-between">
-                        <span>Çatdırılma:</span>
-                        <span class="text-green-600 font-bold">PULSUZ</span>
-                    </div>
-                    <div class="flex justify-between text-base font-bold text-gray-900 border-t pt-2">
                         <span>Yekun Məbləğ:</span>
-                        <span id="final-total" class="text-indigo-600">0 ₼</span>
+                        <span id="final-total" class="text-xl font-bold text-indigo-600">0 ₼</span>
                     </div>
                 </div>
                 <button onclick="completeOrder()" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3.5 rounded-xl shadow transition-colors">
@@ -114,7 +77,6 @@
             
             if (cart.length === 0) {
                 container.innerHTML = '<p class="text-sm text-gray-500">Səbətiniz boşdur.</p>';
-                document.getElementById('subtotal').innerText = '0 ₼';
                 document.getElementById('final-total').innerText = '0 ₼';
                 return;
             }
@@ -127,18 +89,40 @@
             `).join('');
 
             const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            document.getElementById('subtotal').innerText = total + ' ₼';
             document.getElementById('final-total').innerText = total + ' ₼';
         }
 
         function completeOrder() {
             const cart = JSON.parse(localStorage.getItem('az_market_cart')) || [];
+            const name = document.getElementById('cust-name').value;
+            const phone = document.getElementById('cust-phone').value;
+            const address = document.getElementById('cust-address').value;
+
             if(cart.length === 0) {
                 alert('Səbətiniz boşdur!');
                 return;
             }
-            alert('🎉 Sifarişiniz uğurla rəsmiləşdirildi! Təşəkkür edirik.');
+            if(!name || !phone || !address) {
+                alert('Zəhmət olmasa çatdırılma məlumatlarını tam doldurun.');
+                return;
+            }
+
+            // Sifarişi tarixçəyə əlavə et
+            const orders = JSON.parse(localStorage.getItem('az_market_orders')) || [];
+            const newOrder = {
+                id: Date.now(),
+                date: new Date().toLocaleString(),
+                items: cart,
+                total: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0),
+                customer: { name, phone, address },
+                status: 'Hazırlanır'
+            };
+
+            orders.unshift(newOrder);
+            localStorage.setItem('az_market_orders', JSON.stringify(orders));
             localStorage.removeItem('az_market_cart');
+
+            alert('🎉 Sifarişiniz uğurla rəsmiləşdirildi və tarixçəyə əlavə olundu!');
             window.location.href = 'index.html';
         }
 
