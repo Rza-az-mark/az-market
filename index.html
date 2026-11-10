@@ -18,7 +18,12 @@
                 <i class="fa-solid fa-magnifying-glass absolute right-3 top-2.5 text-gray-400"></i>
             </div>
 
-            <div class="flex items-center gap-3">
+            <div class="flex items-center gap-2">
+                <a href="login.html" class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium text-xs sm:text-sm px-3 py-2 rounded-lg transition-colors flex items-center gap-1">
+                    <i class="fa-solid fa-user"></i>
+                    <span class="hidden sm:inline">Giriş</span>
+                </a>
+
                 <button onclick="toggleCart()" class="relative bg-gray-100 hover:bg-gray-200 text-gray-700 p-2.5 rounded-full transition-colors">
                     <i class="fa-solid fa-cart-shopping text-lg"></i>
                     <span id="cart-count" class="absolute -top-1 -right-1 bg-orange-500 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center">0</span>
@@ -82,9 +87,10 @@
                     <span>Yekun Məbləğ:</span>
                     <span id="cart-total" class="text-xl text-indigo-600">0 ₼</span>
                 </div>
-                <button class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-xl shadow transition-colors">
+                <!-- Sifarişi Rəsmiləşdir düyməsi birbaşa odenis.html səhifəsinə yönləndirir -->
+                <a href="odenis.html" class="block w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-xl shadow transition-colors text-center">
                     Sifarişi Rəsmiləşdir
-                </button>
+                </a>
             </div>
         </div>
     </div>
@@ -107,7 +113,7 @@
         function renderProducts(items) {
             const grid = document.getElementById('products-grid');
             if(items.length === 0) {
-                grid.innerHTML = '<p class="col-span-full text-center text-gray-500 py-10">Hiçbir məhsul tapılmadı.</p>';
+                grid.innerHTML = '<p class="col-span-full text-center text-gray-500 py-10">Heç bir məhsul tapılmadı.</p>';
                 return;
             }
             grid.innerHTML = items.map(item => `
@@ -158,7 +164,6 @@
             filterProducts();
         }
 
-        // Səbət məntiqi
         function getCart() {
             return JSON.parse(localStorage.getItem('az_market_cart')) || [];
         }
@@ -177,6 +182,7 @@
             if(existing) { existing.quantity += 1; }
             else { cart.push({ ...prod, quantity: 1 }); }
             saveCart(cart);
+            alert('Məhsul səbətə əlavə edildi!');
         }
         function changeQuantity(id, delta) {
             let cart = getCart();
