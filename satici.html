@@ -3,17 +3,182 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AZ Market - Satıcı Qeydiyyatı</title>
+    <title>AZ Market - Satıcı Paneli</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="bg-gray-50">
-    <header class="bg-white border-b p-4 flex justify-between items-center">
-        <h1 class="text-xl font-bold text-indigo-600">Satıcı Paneli</h1>
-        <a href="index.html" class="text-indigo-600 font-medium text-sm">← Ana səhifəyə qayıt</a>
+<body class="bg-gray-100 font-sans text-gray-800">
+
+    <header class="bg-white shadow-sm sticky top-0 z-40">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <h1 class="text-xl font-black text-indigo-600">AZ<span class="text-orange-500">Market</span></h1>
+                <span class="bg-indigo-100 text-indigo-700 text-xs font-bold px-2.5 py-1 rounded-md">Satıcı Kabineti</span>
+            </div>
+            <a href="index.html" class="text-sm font-semibold text-gray-600 hover:text-indigo-600 flex items-center gap-1">
+                <i class="fa-solid fa-arrow-left"></i> Ana Səhifəyə Qayıt
+            </a>
+        </div>
     </header>
-    <main class="max-w-xl mx-auto p-6">
-        <h2 class="text-2xl font-bold text-gray-800 mb-4">AZ Market-də Satıcı Ol</h2>
-        <p class="text-gray-600 mb-4">Mağazanızı yaradın və məhsullarınızı minlərlə alıcıya çatdırın.</p>
+
+    <main class="max-w-6xl mx-auto px-4 py-6 space-y-6">
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="bg-white p-4 rounded-xl border shadow-sm">
+                <p class="text-xs text-gray-500 font-medium">Ümumi Satış</p>
+                <h3 class="text-xl font-bold text-gray-900 mt-1">1,240 ₼</h3>
+            </div>
+            <div class="bg-white p-4 rounded-xl border shadow-sm">
+                <p class="text-xs text-gray-500 font-medium">Gözləyən Sifarişlər</p>
+                <h3 class="text-xl font-bold text-orange-500 mt-1">12</h3>
+            </div>
+            <div class="bg-white p-4 rounded-xl border shadow-sm">
+                <p class="text-xs text-gray-500 font-medium">Aktiv Məhsullar</p>
+                <h3 class="text-xl font-bold text-indigo-600 mt-1" id="product-count">0</h3>
+            </div>
+            <div class="bg-white p-4 rounded-xl border shadow-sm">
+                <p class="text-xs text-gray-500 font-medium">Mağaza Reytinqi</p>
+                <h3 class="text-xl font-bold text-amber-500 mt-1">4.9 ★</h3>
+            </div>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6">
+            
+            <div class="bg-white p-5 rounded-xl border shadow-sm md:col-span-1">
+                <h3 class="text-base font-bold text-gray-800 mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-plus-circle text-indigo-600"></i> Yeni Məhsul Əlavə Et
+                </h3>
+                <form id="add-product-form" onsubmit="handleProductSubmit(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">Məhsulun Adı</label>
+                        <input type="text" id="prod-title" required placeholder="Məs: Naqilsiz Qulaqlıq" class="w-full bg-gray-50 border border-gray-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">Qiymət (₼)</label>
+                        <input type="number" id="prod-price" required placeholder="0.00" step="0.01" class="w-full bg-gray-50 border border-gray-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">Kateqoriya</label>
+                        <select id="prod-category" class="w-full bg-gray-50 border border-gray-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                            <option value="Elektronika">Elektronika</option>
+                            <option value="Geyim & Moda">Geyim & Moda</option>
+                            <option value="Ev & Yaşam">Ev & Yaşam</option>
+                            <option value="Kosmetika">Kosmetika & Baxım</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">Şəkil Linki (URL)</label>
+                        <input type="url" id="prod-img" required placeholder="https://..." class="w-full bg-gray-50 border border-gray-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                    </div>
+
+                    <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2.5 rounded-lg transition-colors shadow">
+                        Məhsulu Yayımla
+                    </button>
+                </form>
+            </div>
+
+            <div class="bg-white p-5 rounded-xl border shadow-sm md:col-span-2">
+                <h3 class="text-base font-bold text-gray-800 mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-boxes-stacked text-orange-500"></i> Mağazadakı Məhsullarınız
+                </h3>
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm text-gray-600">
+                        <thead class="bg-gray-50 text-xs uppercase text-gray-500 border-b">
+                            <tr>
+                                <th class="p-3">Məhsul</th>
+                                <th class="p-3">Kateqoriya</th>
+                                <th class="p-3">Qiymət</th>
+                                <th class="p-3 text-right">Əməliyyat</th>
+                            </tr>
+                        </thead>
+                        <tbody id="seller-products-list" class="divide-y">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
     </main>
+
+    <script>
+        const defaultProducts = [
+            { id: 1, title: 'Simsiz Qulaqlıq Bluetooth 5.0', price: 36, category: 'Elektronika', store: 'TechStore', rating: 4.8, img: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400' },
+            { id: 2, title: 'Klassik Qol Saatı (Dəri Kəmər)', price: 89, category: 'Geyim & Moda', store: 'TimeKeeper', rating: 4.6, img: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400' },
+            { id: 3, title: 'Qırmızı İdman Ayaqqabısı', price: 102, category: 'Geyim & Moda', store: 'SportZone', rating: 4.9, img: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400' },
+            { id: 4, title: 'Studio Səs Qulaqlığı', price: 145, category: 'Elektronika', store: 'AudioPro', rating: 4.7, img: 'https://images.unsplash.com/photo-1583394838336-acd977736f90?w=400' }
+        ];
+
+        function getProducts() {
+            const stored = localStorage.getItem('az_market_products');
+            return stored ? JSON.parse(stored) : defaultProducts;
+        }
+
+        function saveProducts(products) {
+            localStorage.setItem('az_market_products', JSON.stringify(products));
+        }
+
+        function renderProducts() {
+            const sellerProducts = getProducts();
+            const list = document.getElementById('seller-products-list');
+            document.getElementById('product-count').innerText = sellerProducts.length;
+
+            list.innerHTML = sellerProducts.map(p => `
+                <tr class="hover:bg-gray-50">
+                    <td class="p-3 flex items-center gap-3 font-medium text-gray-900">
+                        <img src="${p.img}" class="w-10 h-10 object-cover rounded">
+                        <span class="truncate max-w-[150px] sm:max-w-[200px]">${p.title}</span>
+                    </td>
+                    <td class="p-3">${p.category}</td>
+                    <td class="p-3 font-bold text-indigo-600">${p.price} ₼</td>
+                    <td class="p-3 text-right">
+                        <button onclick="deleteProduct(${p.id})" class="text-red-500 hover:text-red-700 font-medium text-xs bg-red-50 p-2 rounded-lg">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function handleProductSubmit(e) {
+            e.preventDefault();
+            const title = document.getElementById('prod-title').value;
+            const price = parseFloat(document.getElementById('prod-price').value);
+            const category = document.getElementById('prod-category').value;
+            const img = document.getElementById('prod-img').value;
+
+            const products = getProducts();
+            const newProd = {
+                id: Date.now(),
+                title,
+                price,
+                category,
+                img,
+                store: 'Mənim Mağazam',
+                rating: 5.0
+            };
+
+            products.unshift(newProd);
+            saveProducts(products);
+            renderProducts();
+            document.getElementById('add-product-form').reset();
+            alert('Məhsul uğurla əlavə edildi və ana səhifəyə yerləşdirildi!');
+        }
+
+        function deleteProduct(id) {
+            if(confirm('Bu məhsulu silməyə əminsiniz?')) {
+                let products = getProducts();
+                products = products.filter(p => p.id !== id);
+                saveProducts(products);
+                renderProducts();
+            }
+        }
+
+        renderProducts();
+    </script>
 </body>
 </html>
